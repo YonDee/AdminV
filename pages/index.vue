@@ -1,7 +1,7 @@
 <template>
-<v-flex>
-  12321
-</v-flex>
+<v-container>
+  13213
+</v-container>
 </template>
 
 <script>

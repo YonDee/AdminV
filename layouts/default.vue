@@ -88,12 +88,10 @@
   }
 </script>
 
-<style>
-footer{
-  padding-left: 10px;
-  padding-right: 10px;
-}
-footer a{
-  color: #fff;
-}
+<style lang="stylus">
+footer
+  padding-left 10px
+  padding-right 10px
+  a
+    color #fff
 </style>
