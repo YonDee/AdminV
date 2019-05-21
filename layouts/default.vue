@@ -42,30 +42,9 @@
         </v-layout>
       </v-container>
     </v-content>
-    <v-navigation-drawer
-      v-model="right"
-      right
-      temporary
-      fixed
-    ></v-navigation-drawer>
-    <v-navigation-drawer
-      v-model="drawerRight"
-      fixed
-      right
-      clipped
-      app
-    >
-      <v-list dense>
-        <v-list-tile @click.stop="right = !right">
-          <v-list-tile-action>
-            <v-icon>exit_to_app</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Open Temporary Drawer</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
+    <rightDrawer
+     :mainVisible="drawerRight"
+     :rightVisible="right"/>
     <v-footer color="#d43f3a" class="white--text" app>
       <a href="https://github.com/YonDee" target="_blank">@YonDee</a>
       <v-spacer></v-spacer>
@@ -75,17 +54,21 @@
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      drawer: false,
-      drawerRight: false,
-      right: false,
-      left: false
-    }),
-    props: {
-      source: String
-    }
+import rightDrawer from '~/components/navigation-drawer-right'
+export default {
+  components: {
+    rightDrawer
+  },
+  data: () => ({
+    drawer: false,
+    drawerRight: false,
+    right: false,
+    left: false
+  }),
+  props: {
+    source: String
   }
+}
 </script>
 
 <style lang="stylus">
