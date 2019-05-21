@@ -18,9 +18,7 @@
     <v-content>
       <v-container fluid fill-height>
         <v-layout justify-center align-center>
-          <v-flex shrink>
-            <Nuxt />
-          </v-flex>
+          <Nuxt />
         </v-layout>
       </v-container>
     </v-content>
