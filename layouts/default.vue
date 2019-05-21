@@ -1,25 +1,7 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer
-      v-model="drawerRight"
-      fixed
-      right
-      clipped
-      app
-    >
-      <v-list dense>
-        <v-list-tile @click.stop="right = !right">
-          <v-list-tile-action>
-            <v-icon>exit_to_app</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Open Temporary Drawer</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
     <v-toolbar
-      color="blue-grey"
+      color="#d43f3a"
       dark
       fixed
       app
@@ -66,7 +48,25 @@
       temporary
       fixed
     ></v-navigation-drawer>
-    <v-footer color="blue-grey" class="white--text" app>
+    <v-navigation-drawer
+      v-model="drawerRight"
+      fixed
+      right
+      clipped
+      app
+    >
+      <v-list dense>
+        <v-list-tile @click.stop="right = !right">
+          <v-list-tile-action>
+            <v-icon>exit_to_app</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Open Temporary Drawer</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
+    <v-footer color="#d43f3a" class="white--text" app>
       <a href="https://github.com/YonDee" target="_blank">@YonDee</a>
       <v-spacer></v-spacer>
       <span>&copy; 2019</span>
@@ -77,8 +77,8 @@
 <script>
   export default {
     data: () => ({
-      drawer: null,
-      drawerRight: null,
+      drawer: false,
+      drawerRight: false,
       right: false,
       left: false
     }),
