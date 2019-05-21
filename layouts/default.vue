@@ -26,7 +26,7 @@
     </v-content>
     <rightDrawer
      :mainVisible="drawerRight"
-     :rightVisible="right"/>
+     :childVisible="right"/>
     <v-footer color="#d43f3a" class="white--text" app>
       <a href="https://github.com/YonDee" target="_blank">@YonDee</a>
       <v-spacer></v-spacer>

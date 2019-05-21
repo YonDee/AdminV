@@ -32,7 +32,7 @@ export default {
   data(){
     return {
       drawerRight: this.mainVisible,
-      right: this.rightVisible
+      right: this.childVisible
     }
   },
   props: {
@@ -40,7 +40,7 @@ export default {
       type: Boolean,
       default: false
     },
-    rightVisible: {
+    childVisible: {
       type: Boolean,
       default: false
     }
@@ -49,7 +49,7 @@ export default {
     mainVisible(val){
       this.drawerRight = val
     },
-    rightVisible(val){
+    childVisible(val){
       this.right = val
     },
   }
