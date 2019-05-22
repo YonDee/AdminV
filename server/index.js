@@ -1,12 +1,20 @@
 const Koa = require('koa')
 const consola = require('consola')
+const middleware = require('./middleware')
 const { Nuxt, Builder } = require('nuxt')
+const koaBody = require('koa-body')
+const cors = require('@koa/cors')
 
 const app = new Koa()
 
 // Import and Set Nuxt.js options
 let config = require('../nuxt.config.js')
 config.dev = !(app.env === 'production')
+
+// customize config
+app.use(koaBody({ multipart: true }))
+app.use(cors({ credentials: true }))
+middleware(app)
 
 async function start() {
   // Instantiate nuxt.js
