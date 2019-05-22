@@ -11,8 +11,10 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@koa/cors": "^3.0.0",
     "cross-env": "^5.2.0",
     "koa": "^2.6.2",
+    "koa-body": "^4.1.0",
     "koa-compose": "^4.1.0",
     "koa-router": "^7.4.0",
     "mysql2": "^1.6.5",
