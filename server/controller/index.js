@@ -1,5 +1,18 @@
-module.exports = {
-  index: async (ctx) => {
-    ctx.body = "12312213"
-  }
-}
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+const basename = path.basename(__filename);
+const Controller = {}
+
+fs
+  .readdirSync(__dirname)
+  .filter(file => {
+    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
+  })
+  .forEach(file => {
+    const model = require(path.join(__dirname, file))
+    Controller[model.name] = model;
+  });
+
+module.exports = Controller;
