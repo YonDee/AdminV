@@ -11,7 +11,19 @@
             <v-icon>exit_to_app</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>Open Temporary Drawer</v-list-tile-title>
+            <v-list-tile-title>
+              <h3>Open Temporary Drawer</h3>
+            </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile @click.stop="left = !left">
+          <v-list-tile-action>
+            <v-icon>exit_to_app</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>
+              <h3>辣鸡游戏剑网3</h3>
+            </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -53,6 +65,7 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="stylus" scoped>
+h1, h2, h3, h4
+  font-weight 300
 </style>
