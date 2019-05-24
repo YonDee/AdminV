@@ -44,13 +44,13 @@
         </v-list-tile-content>
       </v-list-tile>
       <v-list two-line subheader v-if="!userInfoVisible" style="border-bottom: 1px solid #ccc">
-        <v-list-tile v-for="item in items2" :key="item.title" @click="userInfoVisible = !userInfoVisible">
+        <v-list-tile v-for="item in items2" :key="item.title" @click="userVisible(item)">
           <v-list-tile-avatar>
             <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
           </v-list-tile-avatar>
           <v-list-tile-content>
             <v-list-tile-title><strong>{{ item.name }}</strong> ({{ item.account }})</v-list-tile-title>
-            <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
+            <v-list-tile-sub-title>{{ item.email }}</v-list-tile-sub-title>
           </v-list-tile-content>
           <v-list-tile-action>
             <v-btn icon>
@@ -64,7 +64,7 @@
         </v-layout>
       </v-list>
       <v-list style="border-bottom: 1px solid #ccc" v-else>
-        123213
+        {{ this.editUser }}
         <v-btn @click="userInfoVisible = !userInfoVisible">back</v-btn>
       </v-list>
     </v-navigation-drawer>
@@ -78,9 +78,10 @@ export default {
       drawer: this.mainVisible,
       left: this.childVisible,
       userInfoVisible: false,
+      editUser: {},
       items2: [
-        { icon: 'assignment', iconClass: 'blue white--text', account: 'user1', name: 'Jack', subtitle: 'user1@mail.com' },
-        { icon: 'call_to_action', iconClass: 'amber white--text', account: 'user2', name: 'Mona', subtitle: 'user2@mail.com' }
+        { icon: 'assignment', iconClass: 'blue white--text', account: 'user1', name: 'Jack', email: 'user1@mail.com' },
+        { icon: 'call_to_action', iconClass: 'amber white--text', account: 'user2', name: 'Mona', email: 'user2@mail.com' }
       ]
     }
   },
@@ -101,7 +102,15 @@ export default {
     childVisible(val){
       this.left = val
     },
-  }
+  },
+  methods: {
+    userVisible(userInfo){
+      if(userInfo){
+        this.userInfoVisible = true
+        this.editUser = userInfo
+      }
+    }
+  },
 }
 </script>
 
