@@ -34,7 +34,7 @@ module.exports = {
   */
   css: [
     '~/assets/style/app.styl',
-    require('animate.min.css')
+    '~/assets/style/animate.min.css'
   ],
 
   /*
