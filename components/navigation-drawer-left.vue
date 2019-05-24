@@ -8,21 +8,21 @@
       <v-list dense>
         <v-list-tile @click.stop="left = !left">
           <v-list-tile-action>
-            <v-icon>exit_to_app</v-icon>
+            <v-icon>laptop_mac</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>
-              <h3>Open Temporary Drawer</h3>
+              <h3>HOME</h3>
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-list-tile @click.stop="left = !left">
           <v-list-tile-action>
-            <v-icon>exit_to_app</v-icon>
+            <v-icon>account_box</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>
-              <h3>辣鸡游戏剑网3</h3>
+              <h3>用户管理</h3>
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
