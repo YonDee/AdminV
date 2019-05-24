@@ -5,7 +5,7 @@
       fixed
       right
       app
-      class="animated slideInRight"
+      class="animated slideInRight fast"
     >
     login elements
     </v-navigation-drawer>
@@ -32,8 +32,13 @@
 </script>
 
 <style lang="stylus" scoped>
+@font-face
+  font-family 'Quicksand-Bold'
+  src url('~assets/fonts/Quicksand-Bold.woff')
+  font-style normal
 .login
   h1
-    font-size 150px
-    color #9c9c9c
+    font-size 170px
+    color #afafaf
+    font-family: 'Quicksand-Bold', -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
 </style>
