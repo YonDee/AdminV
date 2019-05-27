@@ -35,63 +35,91 @@
         <v-btn @click="$emit('closeUserManager')">返回</v-btn>
       </v-layout>
     </v-list>
-    <v-flex style="border-bottom: 1px solid #ccc; padding: 10px" class="animated zoomIn faster" v-else>
-      <v-text-field
+    <v-form style="border-bottom: 1px solid #ccc; padding: 10px" class="animated zoomIn faster" v-else>
+      <!-- <v-text-field
       v-model="editUser.id"
       label="ID"
       xs12
       required
-      disabled>
-      </v-text-field>
+      disabled
+      v-if="editUser.id">
+      </v-text-field> -->
       <v-text-field
       v-model="editUser.name"
       label="Name"
-      xs12
+      :rules="[rules.required, rules.counter]"
+      clearable
       required>
       </v-text-field>
       <v-text-field
       v-model="editUser.account"
       label="Account"
-      xs12
+      :rules="[rules.required, rules.counter]"
+      clearable
       required>
       </v-text-field>
       <v-text-field
       v-model="editUser.email"
       label="Email"
-      xs12
+      clearable
+      :rules="[rules.required, rules.email]"
       required>
       </v-text-field>
       <v-text-field
       v-model="editUser.password"
       label="Password"
-      xs12
+      :rules="[rules.required]"
+      clearable
       required>
       </v-text-field>
       <v-text-field
       v-model="editUser.confirm_password"
+      validate-on-blur
+      :rules="[rules.required, rules.confirm_password]"
       label="Confirm Password"
-      xs12
+      clearable
       required>
       </v-text-field>
       <v-layout align-center justify-center row>
         <v-btn @click="userInfoVisible = !userInfoVisible">提交</v-btn>
         <v-btn @click="userInfoVisible = !userInfoVisible">返回</v-btn>
       </v-layout>
-    </v-flex>
+    </v-form>
   </v-navigation-drawer>
 </template>
 
 <script>
 export default {
   data(){
+    var passVolid = (value) => {
+      let res = false
+      if(value == this.editUser.password){
+        res = true
+      }
+      return res || 'Invalid password.'
+    };
     return {
       left: this.mainVisible,
       userInfoVisible: false,
       editUser: {},
       items2: [
-        { icon: 'assignment', iconClass: 'blue white--text', account: 'user1', name: 'Jack', email: 'user1@mail.com' },
-        { icon: 'call_to_action', iconClass: 'amber white--text', account: 'user2', name: 'Mona', email: 'user2@mail.com' }
-      ]
+        { icon: 'assignment',id:"1", iconClass: 'blue white--text', account: 'user1', name: 'Jack', email: 'user1@mail.com' },
+        { icon: 'call_to_action',id: "2", iconClass: 'amber white--text', account: 'user2', name: 'Mona', email: 'user2@mail.com' }
+      ],
+      rules: {
+        required: value => !!value || 'Required.',
+        counter: value => value.length <= 20 || 'Max 20 characters',
+        email: value => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          return pattern.test(value) || 'Invalid e-mail.'
+        },
+        confirm_password: (value) => {
+          if(value){
+            return passVolid(value)
+          }
+          return 'Invalid password.'
+        }
+      }
     }
   },
   props:{
