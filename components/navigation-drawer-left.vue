@@ -28,7 +28,9 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <User :mainVisible="left"/>
+    <User
+      :mainVisible="left"
+      @closeUserManager="closeUserManager()"/>
   </v-flex>
 </template>
 
@@ -53,9 +55,12 @@ export default {
   watch: {
     mainVisible(val){
       this.drawer = val
-    },
-    childVisible(val){
-      this.left = val
+    }
+  },
+  methods: {
+    // close user manager
+    closeUserManager(){
+      this.left = !this.left
     },
   },
 }

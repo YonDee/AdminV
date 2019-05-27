@@ -3,6 +3,7 @@
     v-model="left"
     temporary
     fixed
+    stateless
   >
     <v-list-tile style="border-bottom: 1px solid #ccc">
       <v-list-tile-action>
@@ -31,7 +32,7 @@
       </v-list-tile>
       <v-layout align-center justify-center row>
         <v-btn @click="createUser()">创建用户</v-btn>
-        <v-btn @click="left = !left">返回</v-btn>
+        <v-btn @click="$emit('closeUserManager')">返回</v-btn>
       </v-layout>
     </v-list>
     <v-list style="border-bottom: 1px solid #ccc" v-else>
@@ -63,7 +64,7 @@ export default {
   watch: {
     mainVisible(val){
       this.left = val
-    },
+    }
   },
   methods: {
     userVisible(userInfo){
@@ -72,7 +73,10 @@ export default {
         this.editUser = userInfo
       }
     }
-  }
+  },
+  mounted() {
+    window.vue = this
+  },
 }
 </script>
 
