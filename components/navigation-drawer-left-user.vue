@@ -15,7 +15,7 @@
         </v-list-tile-title>
       </v-list-tile-content>
     </v-list-tile>
-    <v-list two-line subheader v-if="!userInfoVisible" style="border-bottom: 1px solid #ccc">
+    <v-list two-line subheader v-if="!userInfoVisible" style="border-bottom: 1px solid #ccc" class="animated slideInDown faster">
       <v-list-tile v-for="item in items2" :key="item.title" @click="userVisible(item)">
         <v-list-tile-avatar>
           <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
@@ -31,14 +31,53 @@
         </v-list-tile-action>
       </v-list-tile>
       <v-layout align-center justify-center row>
-        <v-btn @click="createUser()">创建用户</v-btn>
+        <v-btn @click="userCreate()">创建用户</v-btn>
         <v-btn @click="$emit('closeUserManager')">返回</v-btn>
       </v-layout>
     </v-list>
-    <v-list style="border-bottom: 1px solid #ccc" v-else>
-      {{ this.editUser }}
-      <v-btn @click="userInfoVisible = !userInfoVisible">back</v-btn>
-    </v-list>
+    <v-flex style="border-bottom: 1px solid #ccc; padding: 10px" class="animated zoomIn faster" v-else>
+      <v-text-field
+      v-model="editUser.id"
+      label="ID"
+      xs12
+      required
+      disabled>
+      </v-text-field>
+      <v-text-field
+      v-model="editUser.name"
+      label="Name"
+      xs12
+      required>
+      </v-text-field>
+      <v-text-field
+      v-model="editUser.account"
+      label="Account"
+      xs12
+      required>
+      </v-text-field>
+      <v-text-field
+      v-model="editUser.email"
+      label="Email"
+      xs12
+      required>
+      </v-text-field>
+      <v-text-field
+      v-model="editUser.password"
+      label="Password"
+      xs12
+      required>
+      </v-text-field>
+      <v-text-field
+      v-model="editUser.confirm_password"
+      label="Confirm Password"
+      xs12
+      required>
+      </v-text-field>
+      <v-layout align-center justify-center row>
+        <v-btn @click="userInfoVisible = !userInfoVisible">提交</v-btn>
+        <v-btn @click="userInfoVisible = !userInfoVisible">返回</v-btn>
+      </v-layout>
+    </v-flex>
   </v-navigation-drawer>
 </template>
 
@@ -67,10 +106,20 @@ export default {
     }
   },
   methods: {
-    userVisible(userInfo){
-      if(userInfo){
+    userVisible(user){
+      if(user){
         this.userInfoVisible = true
-        this.editUser = userInfo
+        this.editUser = user
+      }
+    },
+    userCreate(user){
+      this.userInfoVisible = true
+      this.editUser = {
+        id: '',
+        name: '',
+        account: '',
+        email: '',
+        password: ''
       }
     }
   },
