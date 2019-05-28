@@ -50,7 +50,6 @@
       v-model="user.account"
       :error-messages="accountErrors"
       label="Account"
-      @input="$v.user.account.$touch()"
       @blur="$v.user.account.$touch()"
       clearable
       required>
@@ -59,7 +58,6 @@
       v-model="user.email"
       label="Email"
       :error-messages="emailErrors"
-      @input="$v.user.email.$touch()"
       @blur="$v.user.email.$touch()"
       clearable
       required>
@@ -152,8 +150,8 @@ export default {
     confirm_passwordErrors (){
       const errors = []
       if (!this.$v.user.confirm_password.$dirty) return errors
-      !this.$v.user.confirm_password.sameAsPassword && errors.push('Account is required')
-      !this.$v.user.confirm_password.required && errors.push('Account is required')
+      !this.$v.user.confirm_password.sameAsPassword && errors.push('Inconsistent password input twice.')
+      !this.$v.user.confirm_password.required && errors.push('Confirm password is required')
       return errors
     },
   },
@@ -182,6 +180,11 @@ export default {
     // submit
     submit(){
       this.$v.$touch()
+      if(this.$v.$invalid){
+        console.log('提交失败')
+      }else{
+        console.log('提交成功')
+      }
     }
   },
 }
