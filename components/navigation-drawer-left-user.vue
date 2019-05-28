@@ -11,7 +11,7 @@
       </v-list-tile-action>
       <v-list-tile-content>
         <v-list-tile-title>
-          <h3>用户管理</h3>
+          <h3>USER</h3>
         </v-list-tile-title>
       </v-list-tile-content>
     </v-list-tile>
@@ -31,8 +31,8 @@
         </v-list-tile-action>
       </v-list-tile>
       <v-layout align-center justify-center row>
-        <v-btn @click="userCreate()">创建用户</v-btn>
-        <v-btn @click="$emit('closeUserManager')">返回</v-btn>
+        <v-btn @click="userCreate()">Create</v-btn>
+        <v-btn @click="$emit('closeUserManager')">Back</v-btn>
       </v-layout>
     </v-list>
     <v-flex style="border-bottom: 1px solid #ccc; padding: 10px" class="animated zoomIn faster" v-else>
@@ -84,8 +84,8 @@
       required>
       </v-text-field>
       <v-layout align-center justify-center row>
-        <v-btn @click="submit">提交</v-btn>
-        <v-btn @click="userInfoVisible = !userInfoVisible">返回</v-btn>
+        <v-btn @click="submit">Submit</v-btn>
+        <v-btn @click="userInfoVisible = !userInfoVisible">Back</v-btn>
       </v-layout>
     </v-flex>
   </v-navigation-drawer>

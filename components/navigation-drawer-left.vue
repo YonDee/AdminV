@@ -22,7 +22,7 @@
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>
-              <h3>用户管理</h3>
+              <h3>USER</h3>
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
