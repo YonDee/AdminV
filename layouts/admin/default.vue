@@ -1,7 +1,7 @@
 <template>
   <v-app id="inspire">
     <v-toolbar
-      color="#d43f3a"
+      color="primary"
       dark
       fixed
       app
@@ -25,7 +25,7 @@
     <rightDrawer
      :mainVisible="drawerRight"
      :childVisible="right"/>
-    <v-footer color="#d43f3a" class="white--text" app>
+    <v-footer color="primary" class="white--text" app>
       <a href="https://github.com/YonDee" target="_blank">@YonDee</a>
       <v-spacer></v-spacer>
       <span>&copy; 2019</span>
