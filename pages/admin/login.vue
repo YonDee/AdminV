@@ -12,11 +12,11 @@
         v-model="model"
       >
         <v-tab
-          v-for="i in 2"
+          v-for="(item,i) in ['Sign in','Sign up']"
           :key="i"
-          :href="`#tab-${i}`"
+          :href="`#tab-${i+1}`"
         >
-          Item {{ i }}
+          {{ item }}
         </v-tab>
       </v-tabs>
     </v-layout>
@@ -32,17 +32,47 @@
             v-model="account"
             :counter="10"
             label="Account / E-mail"
+            v-if="i == 1"
+            required
+          ></v-text-field>
+          <v-flex v-if="i == 2">
+          <v-text-field
+            v-model="account"
+            :counter="10"
+            label="Account"
             required
           ></v-text-field>
           <v-text-field
+            v-model="email"
+            :counter="10"
+            label="Email"
+            required
+          ></v-text-field>
+          <v-text-field
+            v-model="name"
+            :counter="10"
+            label="Name"
+            required
+          ></v-text-field>
+          </v-flex>
+          <v-text-field
             v-model="password"
             :counter="10"
-            label="password"
+            label="Password"
             type="password"
             required
           ></v-text-field>
+          <v-text-field
+            v-model="confirm_password"
+            :counter="10"
+            label="Confirm Password"
+            type="password"
+            v-if="i == 2"
+            required
+          ></v-text-field>
           <v-layout align-center justify-center row>
-            <v-btn>Login</v-btn>
+            <v-btn v-if="i == 1">Login</v-btn>
+            <v-btn v-if="i == 2">Register</v-btn>
           </v-layout>
         </v-card>
       </v-tab-item>
