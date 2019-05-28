@@ -35,97 +35,126 @@
         <v-btn @click="$emit('closeUserManager')">返回</v-btn>
       </v-layout>
     </v-list>
-    <v-form style="border-bottom: 1px solid #ccc; padding: 10px" class="animated zoomIn faster" v-else>
-      <!-- <v-text-field
-      v-model="editUser.id"
-      label="ID"
-      xs12
-      required
-      disabled
-      v-if="editUser.id">
-      </v-text-field> -->
+    <v-flex style="border-bottom: 1px solid #ccc; padding: 10px" class="animated zoomIn faster" v-else>
       <v-text-field
-      v-model="editUser.name"
+      v-model="user.name"
       label="Name"
-      :rules="[rules.required, rules.counter]"
+      :counter="10"
+      :error-messages="nameErrors"
+      @input="$v.user.name.$touch()"
+      @blur="$v.user.name.$touch()"
       clearable
       required>
       </v-text-field>
       <v-text-field
-      v-model="editUser.account"
+      v-model="user.account"
+      :error-messages="accountErrors"
       label="Account"
-      :rules="[rules.required, rules.counter]"
+      @input="$v.user.account.$touch()"
+      @blur="$v.user.account.$touch()"
       clearable
       required>
       </v-text-field>
       <v-text-field
-      v-model="editUser.email"
+      v-model="user.email"
       label="Email"
+      :error-messages="emailErrors"
+      @input="$v.user.email.$touch()"
+      @blur="$v.user.email.$touch()"
       clearable
-      :rules="[rules.required, rules.email]"
       required>
       </v-text-field>
       <v-text-field
-      v-model="editUser.password"
+      v-model="user.password"
+      :error-messages = "passwordErrors"
+      @input="$v.user.password.$touch()"
+      @blur="$v.user.password.$touch()"
       label="Password"
-      :rules="[rules.required]"
+      :counter="20"
       clearable
       required>
       </v-text-field>
       <v-text-field
-      v-model="editUser.confirm_password"
+      v-model="user.confirm_password"
+      :error-messages = "confirm_passwordErrors"
+      @blur="$v.user.confirm_password.$touch()"
       validate-on-blur
-      :rules="[rules.required, rules.confirm_password]"
       label="Confirm Password"
       clearable
       required>
       </v-text-field>
       <v-layout align-center justify-center row>
-        <v-btn @click="userInfoVisible = !userInfoVisible">提交</v-btn>
+        <v-btn @click="submit">提交</v-btn>
         <v-btn @click="userInfoVisible = !userInfoVisible">返回</v-btn>
       </v-layout>
-    </v-form>
+    </v-flex>
   </v-navigation-drawer>
 </template>
 
 <script>
+import { validationMixin } from 'vuelidate'
+import { required, maxLength, email, sameAs } from 'vuelidate/lib/validators'
 export default {
+  mixins: [validationMixin],
+  validations: {
+    user: {
+      name: { required, maxLength: maxLength(10) },
+      email: { required, email },
+      account: { required },
+      password: { required, maxLength: maxLength(20) }, // define
+      confirm_password: { required, sameAsPassword: sameAs('password')  }
+    },
+  },
   data(){
-    var passVolid = (value) => {
-      let res = false
-      if(value == this.editUser.password){
-        res = true
-      }
-      return res || 'Invalid password.'
-    };
     return {
       left: this.mainVisible,
       userInfoVisible: false,
-      editUser: {},
+      user: {},
       items2: [
         { icon: 'assignment',id:"1", iconClass: 'blue white--text', account: 'user1', name: 'Jack', email: 'user1@mail.com' },
         { icon: 'call_to_action',id: "2", iconClass: 'amber white--text', account: 'user2', name: 'Mona', email: 'user2@mail.com' }
       ],
-      rules: {
-        required: value => !!value || 'Required.',
-        counter: value => value.length <= 20 || 'Max 20 characters',
-        email: value => {
-          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          return pattern.test(value) || 'Invalid e-mail.'
-        },
-        confirm_password: (value) => {
-          if(value){
-            return passVolid(value)
-          }
-          return 'Invalid password.'
-        }
-      }
     }
   },
   props:{
     mainVisible: {
       type: Boolean,
       default: false
+    },
+  },
+  computed: {
+    nameErrors () {
+      const errors = []
+      if (!this.$v.user.name.$dirty) return errors
+      !this.$v.user.name.maxLength && errors.push('Name must be at most 10 characters long')
+      !this.$v.user.name.required && errors.push('Name is required.')
+      return errors
+    },
+    emailErrors () {
+      const errors = []
+      if (!this.$v.user.email.$dirty) return errors
+      !this.$v.user.email.email && errors.push('Must be valid e-mail')
+      !this.$v.user.email.required && errors.push('E-mail is required')
+      return errors
+    },
+    accountErrors () {
+      const errors = []
+      if (!this.$v.user.account.$dirty) return errors
+      !this.$v.user.account.required && errors.push('Account is required')
+      return errors
+    },
+    passwordErrors (){
+      const errors = []
+      if (!this.$v.user.password.$dirty) return errors
+      !this.$v.user.password.required && errors.push('Password is required')
+      return errors
+    },
+    confirm_passwordErrors (){
+      const errors = []
+      if (!this.$v.user.confirm_password.$dirty) return errors
+      !this.$v.user.confirm_password.sameAsPassword && errors.push('Account is required')
+      !this.$v.user.confirm_password.required && errors.push('Account is required')
+      return errors
     },
   },
   watch: {
@@ -137,22 +166,23 @@ export default {
     userVisible(user){
       if(user){
         this.userInfoVisible = true
-        this.editUser = user
+        this.user = user
       }
     },
     userCreate(user){
       this.userInfoVisible = true
-      this.editUser = {
+      this.user = {
         id: '',
         name: '',
         account: '',
         email: '',
         password: ''
       }
+    },
+    // submit
+    submit(){
+      this.$v.$touch()
     }
-  },
-  mounted() {
-    window.vue = this
   },
 }
 </script>
