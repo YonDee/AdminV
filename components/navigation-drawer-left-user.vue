@@ -67,6 +67,7 @@
       :error-messages = "passwordErrors"
       @input="$v.user.password.$touch()"
       @blur="$v.user.password.$touch()"
+      type="password"
       label="Password"
       :counter="20"
       clearable
@@ -77,6 +78,7 @@
       :error-messages = "confirm_passwordErrors"
       @blur="$v.user.confirm_password.$touch()"
       validate-on-blur
+      type="password"
       label="Confirm Password"
       clearable
       required>
