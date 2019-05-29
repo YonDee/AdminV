@@ -17,8 +17,9 @@ module.exports = {
     const now = new Date()
     const password = await bcrypt.enbcrypt('123123');
     return queryInterface.bulkInsert('Users', [{
-      name: 'YonDee',
+      name: 'AdminV',
       email: 'admin@v.com',
+      account: 'adminv',
       password: password,
       createdAt: now,
       updatedAt: now
