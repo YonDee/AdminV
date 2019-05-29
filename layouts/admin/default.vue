@@ -32,6 +32,7 @@
       <span>&copy; 2019</span>
     </v-footer>
     <floatTool />
+    <Message />
   </v-app>
 </template>
 
@@ -39,11 +40,13 @@
 import rightDrawer from '~/components/admin/navigation-drawer-right'
 import leftDrawer from '~/components/admin/navigation-drawer-left'
 import floatTool from '~/components/admin/floatTool'
+import Message from '~/components/common/message'
 export default {
   components: {
     rightDrawer,
     leftDrawer,
-    floatTool
+    floatTool,
+    Message
   },
   data: () => ({
     drawer: false,
