@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    AdminV :D
+    <Nuxt />
   </v-app>
 </template>
 

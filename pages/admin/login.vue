@@ -124,6 +124,7 @@
 .login
   h1
     font-size 170px
-    color #afafaf
+    color #6f6f6f
+    margin-top -5%
     font-family: 'GloriaHallelujah', -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
 </style>
