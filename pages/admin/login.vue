@@ -22,7 +22,7 @@
       </v-tabs>
     </v-layout>
 
-    <v-tabs-items style="padding: 20px; padding-top: 0" v-model="model">
+    <v-tabs-items style="padding: 20px;" v-model="model">
       <v-tab-item
         v-for="i in 2"
         :key="i"
@@ -118,12 +118,12 @@
 
 <style lang="stylus" scoped>
 @font-face
-  font-family 'Quicksand-Bold'
-  src url('~assets/fonts/Quicksand-Bold.woff')
+  font-family 'GloriaHallelujah'
+  src url('~assets/fonts/GloriaHallelujah.woff')
   font-style normal
 .login
   h1
     font-size 170px
     color #afafaf
-    font-family: 'Quicksand-Bold', -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
+    font-family: 'GloriaHallelujah', -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
 </style>
