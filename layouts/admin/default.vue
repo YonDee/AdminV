@@ -6,6 +6,7 @@
       fixed
       app
       clipped-right
+      class="animated slideInDown fast"
     >
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>AdminV</v-toolbar-title>
@@ -25,7 +26,7 @@
     <rightDrawer
      :mainVisible="drawerRight"
      :childVisible="right"/>
-    <v-footer color="primary" class="white--text" app>
+    <v-footer color="primary" class="white--text animated slideInUp fast" app>
       <a href="https://github.com/YonDee" target="_blank">@YonDee</a>
       <v-spacer></v-spacer>
       <span>&copy; 2019</span>

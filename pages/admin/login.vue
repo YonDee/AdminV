@@ -1,11 +1,12 @@
 <template>
-  <v-flex class="login">
+  <v-layout class="login">
     <v-navigation-drawer
       v-model="drawer"
       fixed
       right
       app
-      class="animated slideInRight fast"
+      clipped
+      :class="animateShow"
     >
     <v-layout align-center justify-center column>
       <v-tabs
@@ -21,7 +22,7 @@
       </v-tabs>
     </v-layout>
 
-    <v-tabs-items style="padding: 20px" v-model="model">
+    <v-tabs-items style="padding: 20px; padding-top: 0" v-model="model">
       <v-tab-item
         v-for="i in 2"
         :key="i"
@@ -29,41 +30,34 @@
       >
         <v-card flat >
           <v-text-field
-            v-model="account"
+            v-model="user.account"
             :counter="10"
-            label="Account / E-mail"
-            v-if="i == 1"
+            :label="i == 1 ? 'Account / E-mail' : 'Account' "
             required
           ></v-text-field>
           <v-flex v-if="i == 2">
           <v-text-field
-            v-model="account"
-            :counter="10"
-            label="Account"
-            required
-          ></v-text-field>
-          <v-text-field
-            v-model="email"
+            v-model="user.email"
             :counter="10"
             label="Email"
             required
           ></v-text-field>
           <v-text-field
-            v-model="name"
+            v-model="user.name"
             :counter="10"
             label="Name"
             required
           ></v-text-field>
           </v-flex>
           <v-text-field
-            v-model="password"
+            v-model="user.password"
             :counter="10"
             label="Password"
             type="password"
             required
           ></v-text-field>
           <v-text-field
-            v-model="confirm_password"
+            v-model="user.confirm_password"
             :counter="10"
             label="Confirm Password"
             type="password"
@@ -71,7 +65,7 @@
             required
           ></v-text-field>
           <v-layout align-center justify-center row>
-            <v-btn v-if="i == 1">Login</v-btn>
+            <v-btn v-if="i == 1" @click="login()">Login</v-btn>
             <v-btn v-if="i == 2">Register</v-btn>
           </v-layout>
         </v-card>
@@ -81,24 +75,43 @@
     <v-container fluid fill-height >
       <v-layout justify-center align-center>
         <v-flex text-xs-center>
-          <h1>AdminV</h1>
+          <h1 :class="logoShow">AdminV</h1>
         </v-flex>
       </v-layout>
     </v-container>
-  </v-flex>
+  </v-layout>
 </template>
 
 <script>
   export default {
     layout: 'clear',
     data: () => ({
-      drawer: null,
+      drawer: false,
+      animateShow: '',
+      logoShow: '',
       model: 'tab-1',
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      name: ''
+      user:{
+        name: '',
+        account: '',
+        email: '',
+        password: '',
+        confirm_password: '',
+      }
     }),
-    props: {
-      source: String
+    methods: {
+      login(){
+        this.drawer = false
+        this.animateShow = 'animated slideOutRight fast'
+        this.logoShow = 'animated slideOutRight delay-1s'
+        setTimeout(() => {
+          this.$router.push({ path: '/admin' })
+        }, 1500);
+      }
+    },
+    mounted(){
+      this.drawer = true
+      this.animateShow = 'animated slideInRight fast'
     }
   }
 </script>
