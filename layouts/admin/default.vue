@@ -48,6 +48,7 @@ export default {
     floatTool,
     Message
   },
+  middleware: 'session',
   data: () => ({
     drawer: false,
     drawerRight: false,

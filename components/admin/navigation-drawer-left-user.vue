@@ -183,12 +183,27 @@ export default {
     submit(){
       this.$v.$touch()
       if(this.$v.$invalid){
-        console.log('提交失败')
+        console.log('验证失败')
+        this.$store.commit('snackbar/Message', {
+          type: 'warning',
+          message: 'Submit error'
+        })
       }else{
-        console.log('提交成功')
+        this.$axios.post(window.location.origin  + '/api/user/create', this.user)
+          .then(res => {
+            console.log('提交成功')
+            this.$store.commit('snackbar/Message', {
+              type: 'success',
+              message: 'Created'
+            })
+          })
+          .catch(error => {
+            console.log(error)
+          })
+
       }
     }
-  },
+  }
 }
 </script>
 

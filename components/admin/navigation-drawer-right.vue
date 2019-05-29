@@ -10,10 +10,18 @@
     <v-list dense>
       <v-list-tile @click.stop="right = !right">
         <v-list-tile-action>
+          <v-icon>account_box</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title >USER INFORMATION</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+      <v-list-tile @click.stop="logout()">
+        <v-list-tile-action>
           <v-icon>exit_to_app</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>
-          <v-list-tile-title>Open Temporary Drawer</v-list-tile-title>
+          <v-list-tile-title >LOG OUT</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
     </v-list>
@@ -52,6 +60,18 @@ export default {
     childVisible(val){
       this.right = val
     },
+  },
+  methods: {
+    logout(){
+      this.$axios.post('http://127.0.0.1:3000/api/session/logout')
+        .then(response => {
+          this.$store.commit('setUser', '')
+          this.$router.push('/admin/login')
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
   }
 }
 </script>

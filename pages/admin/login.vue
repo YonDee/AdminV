@@ -22,7 +22,7 @@
       </v-tabs>
     </v-layout>
 
-    <v-tabs-items style="padding: 20px;" v-model="model">
+    <v-tabs-items style="padding: 20px;" v-model="model"  @keyup.native.enter="login">
       <v-tab-item
         v-for="i in 2"
         :key="i"
@@ -31,14 +31,12 @@
         <v-card flat >
           <v-text-field
             v-model="user.account"
-            :counter="10"
             :label="i == 1 ? 'Account / E-mail' : 'Account' "
             required
           ></v-text-field>
           <v-flex v-if="i == 2">
           <v-text-field
             v-model="user.email"
-            :counter="10"
             label="Email"
             required
           ></v-text-field>
@@ -90,7 +88,6 @@
       animateShow: '',
       logoShow: '',
       model: 'tab-1',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
       user:{
         name: '',
         account: '',
@@ -101,15 +98,26 @@
     }),
     methods: {
       login(){
-        this.drawer = false
-        this.animateShow = 'animated slideOutRight fast'
-        this.logoShow = 'animated slideOutRight delay-1s'
-        setTimeout(() => {
-          this.$router.push({ path: '/admin' })
-        }, 1500);
+        this.$axios.post('http://127.0.0.1:3000/api/session/login', this.user)
+          .then(res => {
+            this.$store.commit('snackbar/Message', { type: 'success', message: 'Login success' })
+            this.drawer = false
+            this.animateShow = 'animated slideOutRight fast'
+            this.logoShow = 'animated slideOutRight delay-1s'
+            this.$store.commit('setUser', res.data)
+            setTimeout(() => {
+              this.$router.push({ path: '/admin' })
+            }, 1500);
+          })
+          .catch(error => {
+            console.log(error)
+          })
       }
     },
     mounted(){
+      if(this.$store.state.user){
+        this.$router.push({ path: '/admin' })
+      }
       this.drawer = true
       this.animateShow = 'animated slideInRight fast'
     }

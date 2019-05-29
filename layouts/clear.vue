@@ -7,10 +7,15 @@
         </v-layout>
       </v-container>
     </v-content>
+    <Message />
   </v-app>
 </template>
 
 <script>
+import Message from '~/components/common/Message'
 export default {
+  components: {
+    Message
+  }
 }
 </script>
