@@ -110,7 +110,7 @@
             }, 1500);
           })
           .catch(error => {
-            console.log(error)
+            this.$store.commit('snackbar/Message', { type: 'warning', message: 'The account password is incorrect or does not exist.' })
           })
       }
     },
