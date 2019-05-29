@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import rightDrawer from '~/components/navigation-drawer-right'
-import leftDrawer from '~/components/navigation-drawer-left'
+import rightDrawer from '~/components/admin/navigation-drawer-right'
+import leftDrawer from '~/components/admin/navigation-drawer-left'
 export default {
   components: {
     rightDrawer,

@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import User from "~/components/navigation-drawer-left-user"
+import User from "~/components/admin/navigation-drawer-left-user"
 export default {
   props: {
     mainVisible: {
