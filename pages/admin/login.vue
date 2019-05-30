@@ -98,7 +98,7 @@
     }),
     methods: {
       login(){
-        this.$axios.post('http://127.0.0.1:3000/api/session/login', this.user)
+        this.$axios.post('/api/session/login', this.user)
           .then(res => {
             this.$store.commit('snackbar/Message', { type: 'success', message: 'Login success' })
             this.drawer = false

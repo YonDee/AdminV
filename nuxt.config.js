@@ -1,5 +1,6 @@
 const pkg = require('./package')
 const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
+const devHost = 'http://localhost:3000'
 
 module.exports = {
   mode: 'universal',
@@ -50,6 +51,14 @@ module.exports = {
   modules: [
     '@nuxtjs/axios',
   ],
+  axios: {
+    proxy: true,
+    // baseURL: 'http://127.0.0.1:3000',
+    // browserBaseURL: '/api'
+  },
+  proxy: {
+    '/api/': devHost
+  },
 
   /*
   ** Build configuration

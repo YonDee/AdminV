@@ -4,7 +4,7 @@ export const state = () => ({
 export const actions = {
   async nuxtServerInit ({ commit,dispatch },{ req, app, store }) {
     try {
-      const { data } = await app.$axios.post('http://127.0.0.1:3000/api/session/verify')
+      const { data } = await app.$axios.post('/api/session/verify')
       await commit('setUser', data)
     } catch (error) {
       await commit('setUser', '')

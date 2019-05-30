@@ -63,7 +63,7 @@ export default {
   },
   methods: {
     logout(){
-      this.$axios.post('http://127.0.0.1:3000/api/session/logout')
+      this.$axios.post('/api/session/logout')
         .then(response => {
           this.$store.commit('setUser', '')
           this.$router.push('/admin/login')
