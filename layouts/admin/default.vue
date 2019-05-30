@@ -40,7 +40,7 @@
 import rightDrawer from '~/components/admin/navigation-drawer-right'
 import leftDrawer from '~/components/admin/navigation-drawer-left'
 import floatTool from '~/components/admin/floatTool'
-import Message from '~/components/common/message'
+import Message from '~/components/common/Message'
 export default {
   components: {
     rightDrawer,
