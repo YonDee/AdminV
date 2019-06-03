@@ -22,7 +22,7 @@
       </v-tabs>
     </v-layout>
 
-    <v-tabs-items style="padding: 20px;" v-model="model"  @keyup.native.enter="login">
+    <v-tabs-items style="padding: 20px;" v-model="model"  @keyup.native.enter="model == 'tab-1' ? login() : register()">
       <v-tab-item
         v-for="i in 2"
         :key="i"
@@ -64,7 +64,7 @@
           ></v-text-field>
           <v-layout align-center justify-center row>
             <v-btn v-if="i == 1" @click="login()">Login</v-btn>
-            <v-btn v-if="i == 2">Register</v-btn>
+            <v-btn v-if="i == 2" @click="register()">Register</v-btn>
           </v-layout>
         </v-card>
       </v-tab-item>
@@ -97,8 +97,9 @@
       }
     }),
     methods: {
-      login(){
-        this.$axios.post('/api/session/login', this.user)
+      login(userData){
+        const user = userData || this.user
+        this.$axios.post('/api/session/login', user)
           .then(res => {
             this.$store.commit('snackbar/Message', { type: 'success', message: 'Login success' })
             this.drawer = false
@@ -111,6 +112,16 @@
           })
           .catch(error => {
             this.$store.commit('snackbar/Message', { type: 'warning', message: 'The account password is incorrect or does not exist.' })
+          })
+      },
+      register(){
+        this.$axios.post(window.location.origin  + '/api/user/create', this.user)
+          .then(response => {
+            this.$store.commit('snackbar/Message', { type: 'success', message: 'Register successful' })
+            this.login(this.user)
+          })
+          .catch(error => {
+            console.log(error)
           })
       }
     },
