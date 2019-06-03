@@ -32,24 +32,34 @@
           <v-text-field
             v-model="user.account"
             :label="i == 1 ? 'Account / E-mail' : 'Account' "
+            :error-messages="accountErrors"
+            @blur="$v.user.account.$touch()"
             required
           ></v-text-field>
           <v-flex v-if="i == 2">
           <v-text-field
             v-model="user.email"
             label="Email"
+            :error-messages="emailErrors"
+            @blur="$v.user.email.$touch()"
             required
           ></v-text-field>
           <v-text-field
             v-model="user.name"
             :counter="10"
             label="Name"
+            :error-messages="nameErrors"
+            @input="$v.user.name.$touch()"
+            @blur="$v.user.name.$touch()"
             required
           ></v-text-field>
           </v-flex>
           <v-text-field
             v-model="user.password"
             :counter="10"
+            :error-messages = "passwordErrors"
+            @input="$v.user.password.$touch()"
+            @blur="$v.user.password.$touch()"
             label="Password"
             type="password"
             required
@@ -58,6 +68,8 @@
             v-model="user.confirm_password"
             :counter="10"
             label="Confirm Password"
+            :error-messages = "confirm_passwordErrors"
+            @blur="$v.user.confirm_password.$touch()"
             type="password"
             v-if="i == 2"
             required
@@ -81,7 +93,19 @@
 </template>
 
 <script>
+  import { validationMixin } from 'vuelidate'
+  import { required, maxLength, email, sameAs } from 'vuelidate/lib/validators'
   export default {
+    mixins: [validationMixin],
+    validations: {
+      user: {
+        name: { required, maxLength: maxLength(10) },
+        email: { required, email },
+        account: { required },
+        password: { required, maxLength: maxLength(20) },
+        confirm_password: { required, sameAsPassword: sameAs('password')  }
+      },
+    },
     layout: 'clear',
     data: () => ({
       drawer: false,
@@ -115,15 +139,55 @@
           })
       },
       register(){
-        this.$axios.post('/api/user/create', this.user)
-          .then(response => {
-            this.$store.commit('snackbar/Message', { type: 'success', message: 'Register successful' })
-            this.login(this.user)
-          })
-          .catch(error => {
-            console.log(error)
-          })
+        this.$v.$touch()
+        if(this.$v.$invalid){
+          this.$store.commit('snackbar/Message', { type: 'warning', message: 'Submit invalid.' })
+        }else{
+          this.$axios.post('/api/user/create', this.user)
+            .then(response => {
+              this.$store.commit('snackbar/Message', { type: 'success', message: 'Register successful' })
+              this.login(this.user)
+            })
+            .catch(error => {
+              console.log(error)
+            })
+        }
       }
+    },
+    computed: {
+      nameErrors () {
+        const errors = []
+        if (!this.$v.user.name.$dirty) return errors
+        !this.$v.user.name.maxLength && errors.push('Name must be at most 10 characters long')
+        !this.$v.user.name.required && errors.push('Name is required.')
+        return errors
+      },
+      emailErrors () {
+        const errors = []
+        if (!this.$v.user.email.$dirty) return errors
+        !this.$v.user.email.email && errors.push('Must be valid e-mail')
+        !this.$v.user.email.required && errors.push('E-mail is required')
+        return errors
+      },
+      accountErrors () {
+        const errors = []
+        if (!this.$v.user.account.$dirty) return errors
+        !this.$v.user.account.required && errors.push('Account is required')
+        return errors
+      },
+      passwordErrors (){
+        const errors = []
+        if (!this.$v.user.password.$dirty) return errors
+        !this.$v.user.password.required && errors.push('Password is required')
+        return errors
+      },
+      confirm_passwordErrors (){
+        const errors = []
+        if (!this.$v.user.confirm_password.$dirty) return errors
+        !this.$v.user.confirm_password.sameAsPassword && errors.push('Inconsistent password input twice.')
+        !this.$v.user.confirm_password.required && errors.push('Confirm password is required')
+        return errors
+      },
     },
     mounted(){
       if(this.$store.state.user){
