@@ -115,7 +115,7 @@
           })
       },
       register(){
-        this.$axios.post(window.location.origin  + '/api/user/create', this.user)
+        this.$axios.post('/api/user/create', this.user)
           .then(response => {
             this.$store.commit('snackbar/Message', { type: 'success', message: 'Register successful' })
             this.login(this.user)
