@@ -101,7 +101,7 @@ export default {
       name: { required, maxLength: maxLength(10) },
       email: { required, email },
       account: { required },
-      password: { required, maxLength: maxLength(20) }, // define
+      password: { required, maxLength: maxLength(20) },
       confirm_password: { required, sameAsPassword: sameAs('password')  }
     },
   },
@@ -183,15 +183,13 @@ export default {
     submit(){
       this.$v.$touch()
       if(this.$v.$invalid){
-        console.log('验证失败')
         this.$store.commit('snackbar/Message', {
           type: 'warning',
           message: 'Submit error'
         })
       }else{
-        this.$axios.post(window.location.origin  + '/api/user/create', this.user)
+        this.$axios.post('/api/user/create', this.user)
           .then(res => {
-            console.log('提交成功')
             this.$store.commit('snackbar/Message', {
               type: 'success',
               message: 'Created'
@@ -200,7 +198,6 @@ export default {
           .catch(error => {
             console.log(error)
           })
-
       }
     }
   }
