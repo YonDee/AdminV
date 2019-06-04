@@ -14,30 +14,13 @@ module.exports = {
     ctx.status = 201
     return ctx.body = res.dataValues
   },
-  account_is_unique: async (ctx) => {
+  is_unique: async (ctx) => {
     const req = ctx.request.body
-    const hadUser = await db.User.findOne({
-      where: {
-        account: req.account
-      }
-    })
-    if(hadUser){
-      ctx.throw(403, 'Existing user.')
+    const isUnique = await db.User.findOne({where: req})
+    if(isUnique){
+      ctx.throw(403, 'Existing')
     }else{
-      ctx.body="[type: 'success']"
-    }
-  },
-  email_is_unique: async (ctx) => {
-    const req = ctx.request.body
-    const hadUser = await db.User.findOne({
-      where: {
-        account: req.account
-      }
-    })
-    if(hadUser){
-      ctx.throw(403, 'Existing user.')
-    }else{
-      ctx.body="[type: 'success']"
+      ctx.body="Available"
     }
   }
 }

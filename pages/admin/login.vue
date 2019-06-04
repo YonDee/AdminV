@@ -33,7 +33,7 @@
             <v-text-field
               v-model="user.account"
               :label="i == 1 ? 'Account / E-mail' : 'Account' "
-              :error-messages="accountIsUnique || accountErrors "
+              :error-messages="isUnique.account || accountErrors "
               @blur="$v.user.account.$touch()"
               required
             ></v-text-field>
@@ -41,7 +41,7 @@
             <v-text-field
               v-model="user.email"
               label="Email"
-              :error-messages="emailErrors"
+              :error-messages="isUnique.email || emailErrors"
               @blur="$v.user.email.$touch()"
               required
             ></v-text-field>
@@ -120,7 +120,10 @@
         password: '',
         confirm_password: '',
       },
-      accountIsUnique: ''
+      isUnique: {
+        account: '',
+        email: ''
+      }
     }),
     methods: {
       login(userData){
@@ -142,35 +145,34 @@
       },
       register(){
         this.$v.$touch()
-        if(this.$v.$invalid){
-          this.$store.commit('snackbar/Message', { type: 'warning', message: 'Submit invalid.' })
-        }else{
+        if(!this.$v.$invalid){
           this.$axios.post('/api/user/create', this.user)
             .then(response => {
               this.$store.commit('snackbar/Message', { type: 'success', message: 'Register successful' })
               this.login(this.user)
+              return
             })
             .catch(error => {
               console.log(error)
             })
         }
+        this.$store.commit('snackbar/Message', { type: 'warning', message: 'Submit invalid.' })
       },
-      // checkAccount
-      checkAccountIsUnique: _.debounce(
-        function(val){
-          if(!val){
-            this.accountIsUnique = ''
-          }else{
-            this.$axios.post('/api/user/account_is_unique', { account: this.user.account })
-              .then(response => {
-                return true
-              })
-              .catch(error => {
-                this.accountIsUnique = 'Account is repeat'
-                return
-              })
-          }
-      },300)
+      // is_unique
+      checkIsUnique: _.debounce(
+      function(val, key){
+        this.isUnique[key] = ''
+        if(val){
+          this.$axios.post('/api/user/is_unique', { [key]: val })
+            .then(response => {
+              return true
+            })
+            .catch(error => {
+              this.isUnique[key] = 'Duplicate ' + key
+              return
+            })
+        }
+      },300),
     },
     computed: {
       nameErrors () {
@@ -209,12 +211,23 @@
     },
     watch: {
       'user.account'(val){
-        if(this.model != 'tab-1'){
-          this.checkAccountIsUnique(val)
-        }
+        this.model == 'tab-1' || this.checkIsUnique(val,'account')
+      },
+      'user.email'(val){
+        this.model == 'tab-1' || this.checkIsUnique(val,'email')
       },
       model(val){
-        this.checkAccountIsUnique(this.user.account)
+        if(val == 'tab-2'){
+          this.checkIsUnique(this.user.account,'account')
+          setTimeout(() => {
+            this.checkIsUnique(this.user.email,'email')
+          }, 1000);
+        }else{
+          this.isUnique = {
+            account: '',
+            email: '',
+          }
+        }
       }
     },
     mounted(){
