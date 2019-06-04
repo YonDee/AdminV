@@ -14,7 +14,7 @@ module.exports = {
     ctx.status = 201
     return ctx.body = res.dataValues
   },
-  checkAccount: async (ctx) => {
+  account_is_unique: async (ctx) => {
     const req = ctx.request.body
     const hadUser = await db.User.findOne({
       where: {
@@ -27,7 +27,17 @@ module.exports = {
       ctx.body="[type: 'success']"
     }
   },
-  checkEmail: async (ctx) => {
-
+  email_is_unique: async (ctx) => {
+    const req = ctx.request.body
+    const hadUser = await db.User.findOne({
+      where: {
+        account: req.account
+      }
+    })
+    if(hadUser){
+      ctx.throw(403, 'Existing user.')
+    }else{
+      ctx.body="[type: 'success']"
+    }
   }
 }

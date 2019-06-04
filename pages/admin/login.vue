@@ -33,7 +33,7 @@
             <v-text-field
               v-model="user.account"
               :label="i == 1 ? 'Account / E-mail' : 'Account' "
-              :error-messages="accountCheck || accountErrors "
+              :error-messages="accountIsUnique || accountErrors "
               @blur="$v.user.account.$touch()"
               required
             ></v-text-field>
@@ -120,7 +120,7 @@
         password: '',
         confirm_password: '',
       },
-      accountCheck: ''
+      accountIsUnique: ''
     }),
     methods: {
       login(userData){
@@ -156,17 +156,17 @@
         }
       },
       // checkAccount
-      checkAccount: _.debounce(
+      checkAccountIsUnique: _.debounce(
         function(val){
           if(!val){
-            this.accountCheck = ''
+            this.accountIsUnique = ''
           }else{
-            this.$axios.post('/api/user/checkAccount', { account: this.user.account })
+            this.$axios.post('/api/user/account_is_unique', { account: this.user.account })
               .then(response => {
                 return true
               })
               .catch(error => {
-                this.accountCheck = 'Account is repeat'
+                this.accountIsUnique = 'Account is repeat'
                 return
               })
           }
@@ -210,7 +210,7 @@
     watch: {
       'user.account'(val){
         if(this.model != 'tab-1'){
-          this.checkAccount(val)
+          this.checkAccountIsUnique(val)
         }
       }
     },
