@@ -22,67 +22,67 @@
       </v-tabs>
     </v-layout>
 
-    <v-tabs-items style="padding: 20px;" v-model="model"  @keyup.native.enter="model == 'tab-1' ? login() : register()">
+    <v-tabs-items style="padding: 20px; overflow: hidden" v-model="model"  @keyup.native.enter="model == 'tab-1' ? login() : register()">
       <v-tab-item
         v-for="i in 2"
         :key="i"
         :value="`tab-${i}`"
       >
         <v-card flat >
-          <v-text-field
-            v-model="user.account"
-            :label="i == 1 ? 'Account / E-mail' : 'Account' "
-            :error-messages="accountErrors"
-            @blur="$v.user.account.$touch()"
-            required
-          ></v-text-field>
-          <v-flex v-if="i == 2">
-          <v-text-field
-            v-model="user.email"
-            label="Email"
-            :error-messages="emailErrors"
-            @blur="$v.user.email.$touch()"
-            required
-          ></v-text-field>
-          <v-text-field
-            v-model="user.name"
-            :counter="10"
-            label="Name"
-            :error-messages="nameErrors"
-            @input="$v.user.name.$touch()"
-            @blur="$v.user.name.$touch()"
-            required
-          ></v-text-field>
-          </v-flex>
-          <v-text-field
-            v-model="user.password"
-            :counter="10"
-            :error-messages = "passwordErrors"
-            @input="$v.user.password.$touch()"
-            @blur="$v.user.password.$touch()"
-            label="Password"
-            type="password"
-            required
-          ></v-text-field>
-          <v-text-field
-            v-model="user.confirm_password"
-            :counter="10"
-            label="Confirm Password"
-            :error-messages = "confirm_passwordErrors"
-            @blur="$v.user.confirm_password.$touch()"
-            type="password"
-            v-if="i == 2"
-            required
-          ></v-text-field>
-          <v-layout align-center justify-center row>
-            <v-btn v-if="i == 1" @click="login()">Login</v-btn>
-            <v-btn v-if="i == 2" @click="register()">Register</v-btn>
-          </v-layout>
+          <v-form ref="user">
+            <v-text-field
+              v-model="user.account"
+              :label="i == 1 ? 'Account / E-mail' : 'Account' "
+              :error-messages="accountCheck || accountErrors "
+              @blur="$v.user.account.$touch()"
+              required
+            ></v-text-field>
+            <v-flex v-if="i == 2">
+            <v-text-field
+              v-model="user.email"
+              label="Email"
+              :error-messages="emailErrors"
+              @blur="$v.user.email.$touch()"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="user.name"
+              :counter="10"
+              label="Name"
+              :error-messages="nameErrors"
+              @input="$v.user.name.$touch()"
+              @blur="$v.user.name.$touch()"
+              required
+            ></v-text-field>
+            </v-flex>
+            <v-text-field
+              v-model="user.password"
+              :error-messages = "passwordErrors"
+              @input="$v.user.password.$touch()"
+              @blur="$v.user.password.$touch()"
+              label="Password"
+              type="password"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="user.confirm_password"
+              label="Confirm Password"
+              :error-messages = "confirm_passwordErrors"
+              @blur="$v.user.confirm_password.$touch()"
+              type="password"
+              v-if="i == 2"
+              required
+            ></v-text-field>
+            <v-layout align-center justify-center row style="margin-top: 20px">
+              <v-btn v-if="i == 1" @click="login()">Login</v-btn>
+              <v-btn v-if="i == 2" @click="register()">Register</v-btn>
+            </v-layout>
+          </v-form>
         </v-card>
       </v-tab-item>
     </v-tabs-items>
     </v-navigation-drawer>
-    <v-container fluid fill-height >
+    <v-container fluid fill-height>
       <v-layout justify-center align-center>
         <v-flex text-xs-center>
           <h1 :class="logoShow">AdminV</h1>
@@ -95,6 +95,7 @@
 <script>
   import { validationMixin } from 'vuelidate'
   import { required, maxLength, email, sameAs } from 'vuelidate/lib/validators'
+  import _ from 'underscore'
   export default {
     mixins: [validationMixin],
     validations: {
@@ -118,7 +119,8 @@
         email: '',
         password: '',
         confirm_password: '',
-      }
+      },
+      accountCheck: ''
     }),
     methods: {
       login(userData){
@@ -152,7 +154,23 @@
               console.log(error)
             })
         }
-      }
+      },
+      // checkAccount
+      checkAccount: _.debounce(
+        function(val){
+          if(!val){
+            this.accountCheck = ''
+          }else{
+            this.$axios.post('/api/user/checkAccount', { account: this.user.account })
+              .then(response => {
+                return true
+              })
+              .catch(error => {
+                this.accountCheck = 'Account is repeat'
+                return
+              })
+          }
+      },300)
     },
     computed: {
       nameErrors () {
@@ -188,6 +206,13 @@
         !this.$v.user.confirm_password.required && errors.push('Confirm password is required')
         return errors
       },
+    },
+    watch: {
+      'user.account'(val){
+        if(this.model != 'tab-1'){
+          this.checkAccount(val)
+        }
+      }
     },
     mounted(){
       if(this.$store.state.user){

@@ -6,9 +6,6 @@ const bcrypt = require('../plugins/bcrypt')
 
 module.exports = {
   name: 'user',
-  index: async (ctx) => {
-    console.log(1312)
-  },
   create: async (ctx) => {
     const user = ctx.request.body
     let res
@@ -17,4 +14,20 @@ module.exports = {
     ctx.status = 201
     return ctx.body = res.dataValues
   },
+  checkAccount: async (ctx) => {
+    const req = ctx.request.body
+    const hadUser = await db.User.findOne({
+      where: {
+        account: req.account
+      }
+    })
+    if(hadUser){
+      ctx.throw(403, 'Existing user.')
+    }else{
+      ctx.body="[type: 'success']"
+    }
+  },
+  checkEmail: async (ctx) => {
+
+  }
 }
