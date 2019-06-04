@@ -212,6 +212,9 @@
         if(this.model != 'tab-1'){
           this.checkAccountIsUnique(val)
         }
+      },
+      model(val){
+        this.checkAccountIsUnique(this.user.account)
       }
     },
     mounted(){
