@@ -11,7 +11,10 @@
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>AdminV</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-side-icon @click.stop="drawerRight = !drawerRight"></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click.stop="drawerRight = !drawerRight">
+        <!-- <v-icon>setting</v-icon> -->
+        <v-icon>supervised_user_circle</v-icon>
+      </v-toolbar-side-icon>
     </v-toolbar>
     <leftDrawer
      :mainVisible="drawer"
