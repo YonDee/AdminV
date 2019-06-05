@@ -6,8 +6,8 @@ module.exports = {
   name: 'session',
   login: async (ctx) => {
     const user = ctx.request.body
-    if(!usel.account && !user.password){
-      ctx.throw(403,'Missing necessary fields.')
+    if(!user.account && !user.password){
+      ctx.throw(403, 'Missing necessary fields.')
     }
     let res
     // 查询是否存在邮箱
@@ -35,7 +35,7 @@ module.exports = {
       })
       return ctx.body = res
     } else {
-      ctx.throw('账号或密码错误')
+      ctx.throw(403, 'Incorrect username or password.')
     }
   },
   logout: async (ctx) => {

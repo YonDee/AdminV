@@ -140,7 +140,7 @@
             }, 1500);
           })
           .catch(error => {
-            this.$store.commit('snackbar/Message', { type: 'warning', message: 'The account password is incorrect or does not exist.' })
+            this.$store.commit('snackbar/Message', { type: 'warning', message: error.response.data || 'Submit invalid' })
           })
       },
       register(){
