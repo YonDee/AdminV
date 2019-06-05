@@ -6,6 +6,9 @@ module.exports = {
   name: 'session',
   login: async (ctx) => {
     const user = ctx.request.body
+    if(!usel.account && !user.password){
+      ctx.throw(403,'Missing necessary fields.')
+    }
     let res
     // 查询是否存在邮箱
     res = await db.User.findOne({
