@@ -6,6 +6,7 @@ const Controller = require('../controller')
 module.exports = () => {
   // user routel
   router.post('/api/user/create', Controller.user.create)
+  router.post('/api/user/index', Controller.user.index)
   router.post('/api/user/is_unique', Controller.user.is_unique)
   // session routes
   router.post('/api/session/verify', Controller.session.verify)

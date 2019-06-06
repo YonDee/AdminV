@@ -6,6 +6,10 @@ const bcrypt = require('../plugins/bcrypt')
 
 module.exports = {
   name: 'user',
+  index: async (ctx) => {
+    const res = await db.User.findAndCountAll()
+    ctx.body = res
+  },
   create: async (ctx) => {
     const user = ctx.request.body
     let res

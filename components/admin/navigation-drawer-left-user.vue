@@ -16,9 +16,9 @@
       </v-list-tile-content>
     </v-list-tile>
     <v-list two-line subheader v-if="!userInfoVisible" style="border-bottom: 1px solid #ccc" class="animated slideInDown faster">
-      <v-list-tile v-for="item in items2" :key="item.title" @click="userVisible(item)">
+      <v-list-tile v-for="item in users" :key="item.title" @click="userVisible(item)">
         <v-list-tile-avatar>
-          <v-icon :class="[item.iconClass]">{{ item.icon }}</v-icon>
+          <v-icon class="blue white--text">{{ item.avatar || 'account_circle' }}</v-icon>
         </v-list-tile-avatar>
         <v-list-tile-content>
           <v-list-tile-title><strong>{{ item.name }}</strong> ({{ item.account }})</v-list-tile-title>
@@ -110,10 +110,7 @@ export default {
       left: this.mainVisible,
       userInfoVisible: false,
       user: {},
-      items2: [
-        { icon: 'assignment',id:"1", iconClass: 'blue white--text', account: 'user1', name: 'Jack', email: 'user1@mail.com' },
-        { icon: 'call_to_action',id: "2", iconClass: 'amber white--text', account: 'user2', name: 'Mona', email: 'user2@mail.com' }
-      ],
+      users: []
     }
   },
   props:{
@@ -160,6 +157,18 @@ export default {
   watch: {
     mainVisible(val){
       this.left = val
+      if(this.left && this.users == ''){
+        this.$axios.post('/api/user/index')
+          .then(response => {
+            this.users = response.data.rows.map(item => {
+              item.password = ''
+              return item
+            })
+          })
+          .catch(error => {
+            this.$store.commit('snackbar/Message', { type: 'warning', meesage: error.response.data })
+          })
+      }
     }
   },
   methods: {
@@ -200,7 +209,10 @@ export default {
           })
       }
     }
-  }
+  },
+  mounted() {
+    console.log(this.users)
+  },
 }
 </script>
 

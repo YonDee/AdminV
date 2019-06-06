@@ -69,4 +69,6 @@ export default {
 <style lang="stylus" scoped>
 h1, h2, h3, h4
   font-weight 300
+.v-navigation-drawer::-webkit-scrollbar
+  display none
 </style>
