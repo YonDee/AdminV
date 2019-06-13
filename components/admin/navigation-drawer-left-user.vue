@@ -31,7 +31,7 @@
         </v-list-tile-action>
       </v-list-tile>
       <v-layout align-center justify-center row>
-        <v-btn @click="userCreate()">Create</v-btn>
+        <v-btn @click="userCreate()" >Create</v-btn>
         <v-btn @click="$emit('closeUserManager')">Back</v-btn>
       </v-layout>
     </v-list>
@@ -84,7 +84,7 @@
       required>
       </v-text-field>
       <v-layout align-center justify-center row>
-        <v-btn @click="submit">Submit</v-btn>
+        <v-btn @click="submit" :loading="loading" :disabled="loading">Submit</v-btn>
         <v-btn @click="userInfoVisible = !userInfoVisible">Back</v-btn>
       </v-layout>
     </v-flex>
@@ -107,6 +107,8 @@ export default {
   },
   data(){
     return {
+      loader: null,
+      loading: false,
       left: this.mainVisible,
       userInfoVisible: false,
       user: {},
@@ -169,6 +171,16 @@ export default {
             this.$store.commit('snackbar/Message', { type: 'warning', meesage: error.response.data })
           })
       }
+    },
+    loader(){
+        const l = this.loader
+        this[l] = !this[l]
+
+        setTimeout(() => {
+          this[l] = false
+          this.userInfoVisible = false
+        }, 3000)
+        this.loader = null
     }
   },
   methods: {
@@ -190,6 +202,7 @@ export default {
     },
     // submit
     submit(){
+      this.loader = 'loading'
       this.$v.$touch()
       if(this.$v.$invalid){
         this.$store.commit('snackbar/Message', {
@@ -209,10 +222,7 @@ export default {
           })
       }
     }
-  },
-  mounted() {
-    console.log(this.users)
-  },
+  }
 }
 </script>
 
