@@ -1,8 +1,5 @@
 const db = require('../database/models')
 const bcrypt = require('../plugins/bcrypt')
-// session use follow
-// const jwt = require('jsonwebtoken')
-// const secret = 'wingca2016'
 
 module.exports = {
   name: 'user',
@@ -17,6 +14,18 @@ module.exports = {
     res = await db.User.create(user)
     ctx.status = 201
     return ctx.body = res.dataValues
+  },
+  update: async (ctx) => {
+    const req = ctx.request.body
+    const res = await db.User.findByPk(req.id)
+    let updateData = {}
+    if (req.password) {
+      updateData.password = await bcrypt.enbcrypt(req.password)
+    }
+    updateData.name = req.name
+    updateData.id = req.id
+    await res.update(updateData)
+    ctx.body = { type: 'success' }
   },
   is_unique: async (ctx) => {
     const req = ctx.request.body

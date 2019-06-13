@@ -210,11 +210,13 @@ export default {
           message: 'Submit error'
         })
       }else{
-        this.$axios.post('/api/user/create', this.user)
+        let postUrl
+        postUrl = this.user.id ? '/api/user/update' : '/api/user/create'
+        this.$axios.post(postUrl, this.user)
           .then(res => {
             this.$store.commit('snackbar/Message', {
               type: 'success',
-              message: 'Created'
+              message: 'Submit success!'
             })
           })
           .catch(error => {
