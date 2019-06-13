@@ -1,4 +1,16 @@
 <template>
+<div class="users-manager-body">
+  <div class="pop-tools animated slideInDown faster" v-show="left">
+    <v-btn fab small color="white" @click="$emit('closeUserManager')">
+      <v-icon >keyboard_arrow_left</v-icon>
+    </v-btn>
+    <v-btn fab small color="white">
+      <v-icon @click="userCreate()">add</v-icon>
+    </v-btn>
+    <v-btn fab small color="white" disabled>
+      <v-icon >search</v-icon>
+    </v-btn>
+  </div>
   <v-navigation-drawer
     v-model="left"
     temporary
@@ -15,7 +27,7 @@
         </v-list-tile-title>
       </v-list-tile-content>
     </v-list-tile>
-    <v-list two-line subheader v-if="!userInfoVisible" style="border-bottom: 1px solid #ccc" class="animated slideInDown faster">
+    <v-list two-line subheader v-if="!userInfoVisible" class="animated slideInDown faster users-list">
       <v-list-tile v-for="item in users" :key="item.title" @click="userVisible(item)">
         <v-list-tile-avatar>
           <v-icon class="blue white--text">{{ item.avatar || 'account_circle' }}</v-icon>
@@ -30,10 +42,6 @@
           </v-btn>
         </v-list-tile-action>
       </v-list-tile>
-      <v-layout align-center justify-center row>
-        <v-btn @click="userCreate()" >Create</v-btn>
-        <v-btn @click="$emit('closeUserManager')">Back</v-btn>
-      </v-layout>
     </v-list>
     <v-flex style="border-bottom: 1px solid #ccc; padding: 10px" class="animated zoomIn faster" v-else>
       <v-text-field
@@ -89,6 +97,7 @@
       </v-layout>
     </v-flex>
   </v-navigation-drawer>
+</div>
 </template>
 
 <script>
@@ -228,6 +237,20 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="stylus" scoped>
+.users-manager-body
+  position relative
+  width 300px
+  .pop-tools
+    position absolute
+    right -60px
+    z-index 99
+    display flex
+    flex-direction column
+    justify-content center
+    align-items center
+.users-list
+  height 90vh
+  overflow auto
+  border-bottom 1px solid #ccc
 </style>
