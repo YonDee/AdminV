@@ -102,7 +102,7 @@
 
 <script>
 import { validationMixin } from 'vuelidate'
-import { required, maxLength, email, sameAs } from 'vuelidate/lib/validators'
+import { required, maxLength, email, sameAs, requiredIf } from 'vuelidate/lib/validators'
 export default {
   mixins: [validationMixin],
   validations: {
@@ -110,8 +110,8 @@ export default {
       name: { required, maxLength: maxLength(10) },
       email: { required, email },
       account: { required },
-      password: { required, maxLength: maxLength(20) },
-      confirm_password: { required, sameAsPassword: sameAs('password')  }
+      password: { required: requiredIf(function(){ return !this.user.id }), maxLength: maxLength(20) },
+      confirm_password: { required: requiredIf(function(){ return this.user.password }), sameAsPassword: sameAs('password') }
     },
   },
   data(){
@@ -188,14 +188,15 @@ export default {
         setTimeout(() => {
           this[l] = false
           this.userInfoVisible = false
-        }, 3000)
+        }, 1500)
         this.loader = null
-    }
+    },
   },
   methods: {
     userVisible(user){
       if(user){
         this.userInfoVisible = true
+        user.confirm_password = ''
         this.user = user
       }
     },
@@ -206,21 +207,23 @@ export default {
         name: '',
         account: '',
         email: '',
-        password: ''
+        password: '',
+        confirm_password: ''
       }
     },
     // submit
     submit(){
-      this.loader = 'loading'
       this.$v.$touch()
       if(this.$v.$invalid){
         this.$store.commit('snackbar/Message', {
           type: 'warning',
-          message: 'Submit error'
+          message: 'Submit invalid'
         })
       }else{
+        this.loading = true
         let postUrl
         postUrl = this.user.id ? '/api/user/update' : '/api/user/create'
+
         this.$axios.post(postUrl, this.user)
           .then(res => {
             this.$store.commit('snackbar/Message', {
@@ -231,6 +234,11 @@ export default {
           .catch(error => {
             console.log(error)
           })
+
+          setTimeout(() => {
+            this.userInfoVisible = false
+            this.loading = false
+          }, 1500);
       }
     }
   }
