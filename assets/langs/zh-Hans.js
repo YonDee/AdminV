@@ -15,5 +15,7 @@ module.exports = {
   confirm_password_required: '请填写确认密码',
   confirm_password_same: '密码输入不一致，请重新输入',
   register: '注册',
-  login: '登录'
+  register_success: '注册成功',
+  login: '登录',
+  login_success: '登录成功',
 }

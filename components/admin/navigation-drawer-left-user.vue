@@ -47,7 +47,6 @@
       <v-text-field
       v-model="user.name"
       label="Name"
-      :counter="10"
       :error-messages="nameErrors"
       @input="$v.user.name.$touch()"
       @blur="$v.user.name.$touch()"
@@ -77,7 +76,6 @@
       @blur="$v.user.password.$touch()"
       type="password"
       label="Password"
-      :counter="20"
       clearable
       required>
       </v-text-field>
@@ -135,7 +133,6 @@ export default {
     nameErrors () {
       const errors = []
       if (!this.$v.user.name.$dirty) return errors
-      !this.$v.user.name.maxLength && errors.push('Name must be at most 10 characters long')
       !this.$v.user.name.required && errors.push('Name is required.')
       return errors
     },

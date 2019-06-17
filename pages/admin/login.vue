@@ -127,7 +127,7 @@
         const user = userData || this.user
         this.$axios.post('/api/session/login', user)
           .then(res => {
-            this.$store.commit('snackbar/Message', { type: 'success', message: 'Login success' })
+            this.$store.commit('snackbar/Message', { type: 'success', message: this.lang.login_success })
             this.drawer = false
             this.animateShow = 'animated slideOutRight fast'
             this.logoShow = 'animated slideOutRight delay-1s'
@@ -145,7 +145,7 @@
         if(!this.$v.$invalid){
           this.$axios.post('/api/user/create', this.user)
             .then(response => {
-              this.$store.commit('snackbar/Message', { type: 'success', message: 'Register successful' })
+              this.$store.commit('snackbar/Message', { type: 'success', message: this.lang.register_success })
               this.login(this.user)
               return
             })
