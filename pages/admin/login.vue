@@ -13,7 +13,7 @@
         v-model="model"
       >
         <v-tab
-          v-for="(item,i) in ['Sign in','Sign up']"
+          v-for="(item,i) in ['登录','注册']"
           :key="i"
           :href="`#tab-${i+1}`"
         >
@@ -32,7 +32,7 @@
           <v-form ref="user">
             <v-text-field
               v-model="user.account"
-              :label="i == 1 ? 'Account / E-mail' : 'Account' "
+              :label="i == 1 ? '账号 / 邮箱' : '账号' "
               :error-messages="isUnique.account || accountErrors "
               @blur="$v.user.account.$touch()"
               required
@@ -40,7 +40,7 @@
             <v-flex v-if="i == 2">
             <v-text-field
               v-model="user.email"
-              label="Email"
+              label="邮箱"
               :error-messages="isUnique.email || emailErrors"
               @blur="$v.user.email.$touch()"
               required
@@ -48,7 +48,7 @@
             <v-text-field
               v-model="user.name"
               :counter="10"
-              label="Name"
+              label="姓名"
               :error-messages="nameErrors"
               @input="$v.user.name.$touch()"
               @blur="$v.user.name.$touch()"
@@ -60,13 +60,13 @@
               :error-messages = "passwordErrors"
               @input="$v.user.password.$touch()"
               @blur="$v.user.password.$touch()"
-              label="Password"
+              label="密码"
               type="password"
               required
             ></v-text-field>
             <v-text-field
               v-model="user.confirm_password"
-              label="Confirm Password"
+              label="确认密码"
               :error-messages = "confirm_passwordErrors"
               @blur="$v.user.confirm_password.$touch()"
               type="password"
@@ -74,8 +74,8 @@
               required
             ></v-text-field>
             <v-layout align-center justify-center row style="margin-top: 20px">
-              <v-btn v-if="i == 1" @click="login()">Login</v-btn>
-              <v-btn v-if="i == 2" @click="register()">Register</v-btn>
+              <v-btn v-if="i == 1" @click="login()">登录</v-btn>
+              <v-btn v-if="i == 2" @click="register()">注册</v-btn>
             </v-layout>
           </v-form>
         </v-card>
