@@ -2,6 +2,12 @@
 
 > base on nuxtjs
 
+<p align="center">
+  <a href="https://vuetifyjs.com" target="_blank">
+    <img width="100%"src="./example/images/Jun-17-2019 10-40-37.gif">
+  </a>
+</p>
+
 ## Build Setup
 
 ``` bash

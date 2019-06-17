@@ -1,5 +1,6 @@
 <template>
-<v-container>
+<v-container class="admin-index">
+  <h1>AdminV v1.0</h1>
 </v-container>
 </template>
 
