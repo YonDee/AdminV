@@ -31,7 +31,19 @@
     right
     temporary
     fixed
-  ></v-navigation-drawer>
+  >
+    <div class="user-information">
+      <v-avatar
+        :size="100"
+        color="grey lighten-4"
+      >
+        <img src="https://vuetifyjs.com/apple-touch-icon-180x180.png" alt="avatar">
+      </v-avatar>
+      <h2>{{ $store.state.user.data.name }}</h2>
+      <p>Email: {{ $store.state.user.data.email }}</p>
+      <p>account: {{ $store.state.user.data.account }}</p>
+    </div>
+  </v-navigation-drawer>
 </v-flex>
 </template>
 
@@ -75,3 +87,17 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+.user-information
+  width 100%
+  display flex
+  justify-content center
+  align-items center
+  flex-direction column
+  padding 15px
+  h2
+    margin-top 20px
+  p
+    margin-bottom 0
+</style>
