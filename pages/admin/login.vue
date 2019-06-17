@@ -134,7 +134,7 @@
             this.drawer = false
             this.animateShow = 'animated slideOutRight fast'
             this.logoShow = 'animated slideOutRight delay-1s'
-            this.$store.commit('setUser', res.data)
+            this.$store.commit('setUser', {data: res.data})
             setTimeout(() => {
               this.$router.push({ path: '/admin' })
             }, 1500);
