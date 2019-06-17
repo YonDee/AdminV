@@ -6,17 +6,14 @@
       right
       app
       clipped
-      :class="animateShow"
-    >
+      :class="animateShow">
     <v-layout align-center justify-center column>
       <v-tabs
-        v-model="model"
-      >
+        v-model="model">
         <v-tab
           v-for="(item,i) in [lang.sign_in,lang.sign_up]"
           :key="i"
-          :href="`#tab-${i+1}`"
-        >
+          :href="`#tab-${i+1}`">
           {{ item }}
         </v-tab>
       </v-tabs>
@@ -26,8 +23,7 @@
       <v-tab-item
         v-for="i in 2"
         :key="i"
-        :value="`tab-${i}`"
-      >
+        :value="`tab-${i}`">
         <v-card flat >
           <v-form ref="user">
             <v-text-field
