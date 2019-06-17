@@ -103,6 +103,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, email, sameAs, requiredIf } from 'vuelidate/lib/validators'
+import scrollbarWidth from '~/plugins/scrollbar-width'
 export default {
   mixins: [validationMixin],
   validations: {
@@ -241,6 +242,9 @@ export default {
           }, 1500);
       }
     }
+  },
+  mounted(){
+    console.log("当前滚动条宽度" + scrollbarWidth())
   }
 }
 </script>
@@ -261,4 +265,6 @@ export default {
   height 90vh
   overflow auto
   border-bottom 1px solid #ccc
+  margin-bottom -15px
+  margin-right -15px
 </style>
