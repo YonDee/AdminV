@@ -123,11 +123,15 @@
       }
     }),
     methods: {
-      login(userData){
+      async login(userData){
         const user = userData || this.user
-        this.$axios.post('/api/session/login', user)
+        if(!user.account && !user.password){
+          this.$store.commit('snackbar/Message', { type: 'warning', message: this.$lang.account_and_pass_required })
+          return
+        }
+        await this.$axios.post('/api/session/login', user)
           .then(res => {
-            this.$store.commit('snackbar/Message', { type: 'success', message: this.lang.login_success })
+            this.$store.commit('snackbar/Message', { type: 'success', message: this.$lang.login_success })
             this.drawer = false
             this.animateShow = 'animated slideOutRight fast'
             this.logoShow = 'animated slideOutRight delay-1s'
@@ -137,7 +141,7 @@
             }, 1500);
           })
           .catch(error => {
-            this.$store.commit('snackbar/Message', { type: 'warning', message: error.response.data || 'Submit invalid' })
+            this.$store.commit('snackbar/Message', { type: 'warning', message: this.$lang.account_or_pass_error })
           })
       },
       register(){
@@ -153,7 +157,7 @@
               console.log(error)
             })
         }
-        this.$store.commit('snackbar/Message', { type: 'warning', message: 'Submit invalid.' })
+        this.$store.commit('snackbar/Message', { type: 'warning', message: this.$lang.submit_invalid })
       },
       // is_unique
       checkIsUnique: _.debounce(

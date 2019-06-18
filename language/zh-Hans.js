@@ -19,7 +19,10 @@ Lang.install = function (Vue, options) {
     register: '注册',
     register_success: '注册成功',
     login: '登录',
-    login_success: '登录成功'
+    login_success: '登录成功',
+    submit_invalid: '无效的提交，请确认后重新提交',
+    account_and_pass_required: '请填写账号密码',
+    account_or_pass_error: '账号或密码错误'
   }
 }
 module.exports = Lang;

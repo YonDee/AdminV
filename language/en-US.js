@@ -19,7 +19,9 @@ Lang.install = function (Vue, options) {
     register: 'Register',
     register_success: 'Register success.',
     login: 'Login',
-    login_success: 'Login success.'
+    login_success: 'Login success.',
+    submit_invalid: 'Submit invalid.',
+    account_and_pass_required: 'Account and password is required.'
   }
 }
 module.exports = Lang;
