@@ -23,7 +23,7 @@
       </v-list-tile-action>
       <v-list-tile-content>
         <v-list-tile-title>
-          <h3>USER</h3>
+          <h3>{{ $lang.user_manage }}</h3>
         </v-list-tile-title>
       </v-list-tile-content>
     </v-list-tile>

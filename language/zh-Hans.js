@@ -22,7 +22,8 @@ Lang.install = function (Vue, options) {
     login_success: '登录成功',
     submit_invalid: '无效的提交，请确认后重新提交',
     account_and_pass_required: '请填写账号密码',
-    account_or_pass_error: '账号或密码错误'
+    account_or_pass_error: '账号或密码错误',
+    user_manage: '用户管理'
   }
 }
 module.exports = Lang;
