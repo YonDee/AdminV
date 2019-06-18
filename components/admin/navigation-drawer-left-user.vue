@@ -27,7 +27,7 @@
         </v-list-tile-title>
       </v-list-tile-content>
     </v-list-tile>
-    <v-list two-line subheader v-if="!userInfoVisible" class="animated slideInDown faster users-list">
+    <v-list two-line subheader v-if="!userInfoVisible" class="animated slideInDown faster users-list" :style="scrollBarHide">
       <v-list-tile v-for="item in users" :key="item.title" @click="userVisible(item)">
         <v-list-tile-avatar>
           <v-icon class="blue white--text">{{ item.avatar || 'account_circle' }}</v-icon>
@@ -46,7 +46,7 @@
     <v-flex style="border-bottom: 1px solid #ccc; padding: 10px" class="animated zoomIn faster" v-else>
       <v-text-field
       v-model="user.name"
-      label="Name"
+      :label="$lang.name"
       :error-messages="nameErrors"
       @input="$v.user.name.$touch()"
       @blur="$v.user.name.$touch()"
@@ -56,14 +56,14 @@
       <v-text-field
       v-model="user.account"
       :error-messages="accountErrors"
-      label="Account"
+      :label="$lang.account"
       @blur="$v.user.account.$touch()"
       clearable
       required>
       </v-text-field>
       <v-text-field
       v-model="user.email"
-      label="Email"
+      :label="$lang.email"
       :error-messages="emailErrors"
       @blur="$v.user.email.$touch()"
       clearable
@@ -75,7 +75,7 @@
       @input="$v.user.password.$touch()"
       @blur="$v.user.password.$touch()"
       type="password"
-      label="Password"
+      :label="$lang.password"
       clearable
       required>
       </v-text-field>
@@ -85,7 +85,7 @@
       @blur="$v.user.confirm_password.$touch()"
       validate-on-blur
       type="password"
-      label="Confirm Password"
+      :label="$lang.confirm_password"
       clearable
       required>
       </v-text-field>
@@ -120,7 +120,8 @@ export default {
       left: this.mainVisible,
       userInfoVisible: false,
       user: {},
-      users: []
+      users: [],
+      scrollBarHide: ''
     }
   },
   props:{
@@ -241,7 +242,8 @@ export default {
     }
   },
   mounted(){
-    console.log("当前滚动条宽度" + scrollbarWidth())
+    var barWidth = scrollbarWidth()
+    this.scrollBarHide = typeof barWidth === 'number' ?  `margin-right: -${ barWidth }px; margin-bottom: -${ barWidth }px ` : ''
   }
 }
 </script>
@@ -264,4 +266,5 @@ export default {
   border-bottom 1px solid #ccc
   margin-bottom -15px
   margin-right -15px
+  padding-right 15px
 </style>
