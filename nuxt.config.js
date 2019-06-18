@@ -43,7 +43,10 @@ module.exports = {
   */
   plugins: [
     '@/plugins/vuetify',
-    // modify the following path to use your want language, but before you must create this one plugin
+    /**
+    * modify the following path to use your want language, but before you must create this one plugin
+    * more language plugins in '/language'
+    */
     '@/plugins/language/zh-Hans'
   ],
 
