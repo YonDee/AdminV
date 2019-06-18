@@ -259,7 +259,7 @@ export default {
   },
   mounted(){
     var barWidth = scrollbarWidth()
-    this.scrollBarHide = typeof barWidth === 'number' ?  `margin-right: -${ barWidth }px; margin-bottom: -${ barWidth }px ` : ''
+    this.scrollBarHide = typeof barWidth === 'number' ?  `margin-right: -${ barWidth }px; margin-bottom: -${ barWidth }px; padding-right: -${ barWidth }px ` : ''
   }
 }
 </script>
@@ -280,7 +280,4 @@ export default {
   height 90vh
   overflow auto
   border-bottom 1px solid #ccc
-  margin-bottom -15px
-  margin-right -15px
-  padding-right 15px
 </style>
