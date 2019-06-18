@@ -21,8 +21,11 @@ Lang.install = function (Vue, options) {
     login: 'Login',
     login_success: 'Login success.',
     submit_invalid: 'Submit invalid.',
-    account_and_pass_required: 'Account and password is required.'
-    user_manage: 'User Manage'
+    account_and_pass_required: 'Account and password is required.',
+    user_manage: 'User Manage',
+    add_user: 'Add User',
+    back: 'Back',
+    search: 'Search',
   }
 }
 module.exports = Lang;

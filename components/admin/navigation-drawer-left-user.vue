@@ -1,15 +1,30 @@
 <template>
 <div class="users-manager-body">
   <div class="pop-tools animated slideInDown faster" v-show="left">
-    <v-btn fab small color="white" @click="$emit('closeUserManager')">
-      <v-icon >keyboard_arrow_left</v-icon>
-    </v-btn>
-    <v-btn fab small color="white">
-      <v-icon @click="userCreate()">add</v-icon>
-    </v-btn>
-    <v-btn fab small color="white" disabled>
-      <v-icon >search</v-icon>
-    </v-btn>
+    <v-tooltip right>
+      <template v-slot:activator="{ on }">
+        <v-btn fab small color="white" @click="$emit('closeUserManager')" v-on="on">
+          <v-icon >keyboard_arrow_left</v-icon>
+        </v-btn>
+      </template>
+      <span>{{ $lang.back }}</span>
+    </v-tooltip>
+    <v-tooltip right>
+      <template v-slot:activator="{ on }">
+        <v-btn fab small color="white" v-on="on">
+          <v-icon @click="userCreate()">add</v-icon>
+        </v-btn>
+      </template>
+      <span>{{ $lang.add_user }}</span>
+    </v-tooltip>
+    <v-tooltip right>
+      <template v-slot:activator="{ on }">
+        <v-btn fab small color="white" v-on="on" disabled>
+          <v-icon >search</v-icon>
+        </v-btn>
+      </template>
+      <span>{{ $lang.search }}</span>
+    </v-tooltip>
   </div>
   <v-navigation-drawer
     v-model="left"
@@ -167,7 +182,8 @@ export default {
   watch: {
     mainVisible(val){
       this.left = val
-      if(this.left && this.users == ''){
+      if(this.left){
+        console.log('获取用户列表')
         this.$axios.post('/api/user/index')
           .then(response => {
             this.users = response.data.rows.map(item => {

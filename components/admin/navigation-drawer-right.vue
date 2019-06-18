@@ -39,9 +39,9 @@
       >
         <img src="https://vuetifyjs.com/apple-touch-icon-180x180.png" alt="avatar">
       </v-avatar>
-      <h2>{{ $store.state.user.data.name || '' }}</h2>
-      <p>Email: {{ $store.state.user.data.email || '' }}</p>
-      <p>account: {{ $store.state.user.data.account ||  ''}}</p>
+      <h2>{{ userInfo.name }}</h2>
+      <p>Email: {{ userInfo.email }}</p>
+      <p>account: {{ userInfo.account }}</p>
     </div>
   </v-navigation-drawer>
 </v-flex>
@@ -52,7 +52,8 @@ export default {
   data(){
     return {
       drawerRight: this.mainVisible,
-      right: this.childVisible
+      right: this.childVisible,
+      userInfo: ''
     }
   },
   props: {
@@ -68,6 +69,8 @@ export default {
   watch: {
     mainVisible(val){
       this.drawerRight = val
+      console.log(this.$store.state.user.data)
+      this.userInfo = this.$store.state.user.data || { name: '',email: '', account: ''}
     },
     childVisible(val){
       this.right = val
