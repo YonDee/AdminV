@@ -42,7 +42,9 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/vuetify'
+    '@/plugins/vuetify',
+    // modify the following path to use your want language, but before you must create this one plugin
+    '@/plugins/language/zh-Hans'
   ],
 
   /*

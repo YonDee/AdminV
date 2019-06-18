@@ -11,7 +11,7 @@
       <v-tabs
         v-model="model">
         <v-tab
-          v-for="(item,i) in [lang.sign_in,lang.sign_up]"
+          v-for="(item,i) in [$lang.sign_in,$lang.sign_up]"
           :key="i"
           :href="`#tab-${i+1}`">
           {{ item }}
@@ -28,7 +28,7 @@
           <v-form ref="user">
             <v-text-field
               v-model="user.account"
-              :label="i == 1 ? lang.account_or_email : lang.account "
+              :label="i == 1 ? $lang.account_or_email : $lang.account "
               :error-messages="isUnique.account || accountErrors "
               @blur="$v.user.account.$touch()"
               required
@@ -36,14 +36,14 @@
             <v-flex v-if="i == 2">
             <v-text-field
               v-model="user.email"
-              :label="lang.email"
+              :label="$lang.email"
               :error-messages="isUnique.email || emailErrors"
               @blur="$v.user.email.$touch()"
               required
             ></v-text-field>
             <v-text-field
               v-model="user.name"
-              :label="lang.name"
+              :label="$lang.name"
               :error-messages="nameErrors"
               @input="$v.user.name.$touch()"
               @blur="$v.user.name.$touch()"
@@ -55,13 +55,13 @@
               :error-messages = "passwordErrors"
               @input="$v.user.password.$touch()"
               @blur="$v.user.password.$touch()"
-              :label="lang.password"
+              :label="$lang.password"
               type="password"
               required
             ></v-text-field>
             <v-text-field
               v-model="user.confirm_password"
-              :label="lang.confirm_password"
+              :label="$lang.confirm_password"
               :error-messages = "confirm_passwordErrors"
               @blur="$v.user.confirm_password.$touch()"
               type="password"
@@ -69,8 +69,8 @@
               required
             ></v-text-field>
             <v-layout align-center justify-center row style="margin-top: 20px">
-              <v-btn v-if="i == 1" @click="login()">{{ lang.login }}</v-btn>
-              <v-btn v-if="i == 2" @click="register()">{{ lang.register }}</v-btn>
+              <v-btn v-if="i == 1" @click="login()">{{ $lang.login }}</v-btn>
+              <v-btn v-if="i == 2" @click="register()">{{ $lang.register }}</v-btn>
             </v-layout>
           </v-form>
         </v-card>
@@ -92,7 +92,7 @@
   import { required, maxLength, email, sameAs } from 'vuelidate/lib/validators'
   import _ from 'underscore'
   // 使用中文语言包
-  import Lang from '~/assets/langs/zh-Hans.js'
+  // import Lang from '~/assets/langs/zh-Hans.js'
   export default {
     mixins: [validationMixin],
     validations: {
@@ -175,33 +175,33 @@
       nameErrors () {
         const errors = []
         if (!this.$v.user.name.$dirty) return errors
-        !this.$v.user.name.required && errors.push(this.lang.name_required)
+        !this.$v.user.name.required && errors.push(this.$lang.name_required)
         return errors
       },
       emailErrors () {
         const errors = []
         if (!this.$v.user.email.$dirty) return errors
-        !this.$v.user.email.email && errors.push(this.lang.email_valid)
-        !this.$v.user.email.required && errors.push(this.lang.email_required)
+        !this.$v.user.email.email && errors.push(this.$lang.email_valid)
+        !this.$v.user.email.required && errors.push(this.$lang.email_required)
         return errors
       },
       accountErrors () {
         const errors = []
         if (!this.$v.user.account.$dirty) return errors
-        !this.$v.user.account.required && errors.push(this.lang.account_required)
+        !this.$v.user.account.required && errors.push(this.$lang.account_required)
         return errors
       },
       passwordErrors (){
         const errors = []
         if (!this.$v.user.password.$dirty) return errors
-        !this.$v.user.password.required && errors.push(this.lang.password_required)
+        !this.$v.user.password.required && errors.push(this.$lang.password_required)
         return errors
       },
       confirm_passwordErrors (){
         const errors = []
         if (!this.$v.user.confirm_password.$dirty) return errors
-        !this.$v.user.confirm_password.sameAsPassword && errors.push(this.lang.confirm_password_same)
-        !this.$v.user.confirm_password.required && errors.push(this.lang.confirm_password_required)
+        !this.$v.user.confirm_password.sameAsPassword && errors.push(this.$lang.confirm_password_same)
+        !this.$v.user.confirm_password.required && errors.push(this.$lang.confirm_password_required)
         return errors
       },
     },
@@ -233,9 +233,6 @@
       this.drawer = true
       this.animateShow = 'animated slideInRight fast'
     },
-    created(){
-      this.lang = Lang
-    }
   }
 </script>
 
