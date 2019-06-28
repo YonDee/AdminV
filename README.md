@@ -28,6 +28,6 @@ $ npm start
 # generate static project
 $ npm run generate
 ```
-> Default account: admin@wingca.com / password: 123123
+> Default account: admin@v.com / password: 123123
 
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
