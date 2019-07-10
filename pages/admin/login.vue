@@ -19,7 +19,7 @@
       </v-tabs>
     </v-layout>
 
-    <v-tabs-items style="padding: 20px; overflow: hidden" v-model="model"  @keyup.native.enter="model == 'tab-1' ? login() : register()">
+    <v-tabs-items style="padding: 20px; overflow: hidden" v-model="model"  @keyup.native.enter="model === 'tab-1' ? login() : register()">
       <v-tab-item
         v-for="i in 2"
         :key="i"
@@ -28,12 +28,12 @@
           <v-form ref="user">
             <v-text-field
               v-model="user.account"
-              :label="i == 1 ? $lang.account_or_email : $lang.account "
+              :label="i === 1 ? $lang.account_or_email : $lang.account "
               :error-messages="isUnique.account || accountErrors "
               @blur="$v.user.account.$touch()"
               required
             ></v-text-field>
-            <v-flex v-if="i == 2">
+            <v-flex v-if="i === 2">
             <v-text-field
               v-model="user.email"
               :label="$lang.email"
@@ -65,12 +65,12 @@
               :error-messages = "confirm_passwordErrors"
               @blur="$v.user.confirm_password.$touch()"
               type="password"
-              v-if="i == 2"
+              v-if="i === 2"
               required
             ></v-text-field>
             <v-layout align-center justify-center row style="margin-top: 20px">
-              <v-btn v-if="i == 1" @click="login()">{{ $lang.login }}</v-btn>
-              <v-btn v-if="i == 2" @click="register()">{{ $lang.register }}</v-btn>
+              <v-btn v-if="i === 1" @click="login()">{{ $lang.login }}</v-btn>
+              <v-btn v-if="i === 2" @click="register()">{{ $lang.register }}</v-btn>
             </v-layout>
           </v-form>
         </v-card>
@@ -211,13 +211,13 @@
     },
     watch: {
       'user.account'(val){
-        this.model == 'tab-1' || this.checkIsUnique(val,'account')
+        this.model === 'tab-1' || this.checkIsUnique(val,'account')
       },
       'user.email'(val){
-        this.model == 'tab-1' || this.checkIsUnique(val,'email')
+        this.model === 'tab-1' || this.checkIsUnique(val,'email')
       },
       model(val){
-        if(val == 'tab-2'){
+        if(val === 'tab-2'){
           this.checkIsUnique(this.user.account,'account')
           setTimeout(() => {
             this.checkIsUnique(this.user.email,'email')

@@ -4,7 +4,7 @@ export const state = () => ({
 
 export const mutations = {
   Message(state, data) {
-    if (typeof data == 'object') {
+    if (typeof data === 'object') {
       state.data = data
     }
   }
