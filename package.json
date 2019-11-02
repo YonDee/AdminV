@@ -24,7 +24,7 @@
     "lodash.template": "^4.5.0",
     "mysql2": "^1.6.5",
     "nuxt": "^2.8.0",
-    "sequelize": "^5.8.7",
+    "sequelize": "^5.15.1",
     "sequelize-cli": "^5.5.0",
     "underscore": "^1.9.1",
     "vuelidate": "^0.7.4",
