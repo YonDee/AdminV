@@ -20,7 +20,7 @@
     "koa-body": "^4.1.0",
     "koa-compose": "^4.1.0",
     "koa-router": "^7.4.0",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.19",
     "lodash.template": "^4.5.0",
     "mysql2": "^1.6.5",
     "nuxt": "^2.8.0",
